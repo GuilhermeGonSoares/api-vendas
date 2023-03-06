@@ -1,33 +1,25 @@
 import AppError from '@shared/errors/AppError';
-import { hash } from 'bcryptjs';
 import { getCustomRepository } from 'typeorm';
-import User from '../typeorm/entities/User';
 import UsersRepository from '../typeorm/repositories/UsersRepository';
+import UsersTokenRepository from '../typeorm/repositories/UsersTokenRepository';
 
 interface IRequest {
-  name: string;
   email: string;
-  password: string;
 }
 
-export default class CreateUserService {
-  public async execute({ name, email, password }: IRequest): Promise<User> {
+export default class SendForgotPasswordEmailService {
+  public async execute({ email }: IRequest): Promise<void> {
     const usersRepository = getCustomRepository(UsersRepository);
-    const emailExists = await usersRepository.findByEmail(email);
+    const userTokensRepository = getCustomRepository(UsersTokenRepository);
 
-    if (emailExists) {
-      throw new AppError('Email already exists');
+    const user = await usersRepository.findByEmail(email);
+
+    if (!user) {
+      throw new AppError('Email does not exists!');
     }
 
-    const hashedPassword = await hash(password, 8);
+    const token = await userTokensRepository.generate(user.id);
 
-    const user = usersRepository.create({
-      name,
-      email,
-      password: hashedPassword,
-    });
-    await usersRepository.save(user);
-
-    return user;
+    console.log(token);
   }
 }
