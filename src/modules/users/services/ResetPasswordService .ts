@@ -22,6 +22,7 @@ export default class ResetPasswordService {
     }
 
     const user = await usersRepository.findOne(userToken.user_id);
+    console.log(user);
 
     if (!user) {
       throw new AppError('User does not exists!');
