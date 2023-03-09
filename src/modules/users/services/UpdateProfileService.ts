@@ -11,7 +11,7 @@ interface IRequest {
   old_password?: string;
 }
 
-export default class UpdateUserService {
+export default class UpdateProfileService {
   public async execute({ id, email, password, name, old_password }: IRequest) {
     const userRepository = getCustomRepository(UsersRepository);
 

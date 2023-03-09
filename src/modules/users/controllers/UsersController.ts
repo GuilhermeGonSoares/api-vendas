@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import CreateUserService from '../services/CreateUserService';
 import ListUserService from '../services/ListUserService';
-import ShowUserService from '../services/ShowUserService';
 
 export default class UsersController {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -18,14 +17,5 @@ export default class UsersController {
     const user = await createUser.execute({ name, email, password });
 
     return response.status(201).json(user);
-  }
-
-  public async show(request: Request, response: Response): Promise<Response> {
-    const { id } = request.user;
-    const showUser = new ShowUserService();
-
-    const user = await showUser.execute({ id });
-
-    return response.json(user);
   }
 }

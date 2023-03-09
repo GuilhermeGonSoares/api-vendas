@@ -13,7 +13,6 @@ const usersAvatarControler = new UsersAvatarController();
 const upload = multer(uploadConfig);
 
 usersRouter.get('/', isAuthenticated, usersController.index);
-usersRouter.get('/show', isAuthenticated, usersController.show);
 
 usersRouter.post(
   '/',
