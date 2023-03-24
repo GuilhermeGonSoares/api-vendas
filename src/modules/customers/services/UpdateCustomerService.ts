@@ -1,14 +1,20 @@
 import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
-import CustomersRepository from '../typeorm/repositories/CustomersRepository';
+import CustomersRepository from '../infra/typeorm/repositories/CustomersRepository';
+import { ICustomersRepository } from '../domain/repositories/ICustomersRepository';
+import { inject, injectable } from 'tsyringe';
 
 interface IRequest {
   id: string;
   name: string;
   email: string;
 }
-
+@injectable()
 class UpdateCustomerService {
+  constructor(
+    @inject('CustomersRepository')
+    private customersRepository: ICustomersRepository,
+  ) {}
   public async execute({ id, name, email }: IRequest) {
     const customersRepository = getCustomRepository(CustomersRepository);
 

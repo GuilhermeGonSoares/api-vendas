@@ -1,8 +1,8 @@
-import CustomersRepository from '@modules/customers/typeorm/repositories/CustomersRepository';
-import { ProductRepository } from '@modules/products/typeorm/repositories/ProductRepository';
+import CustomersRepository from '@modules/customers/infra/typeorm/repositories/CustomersRepository';
+import { ProductRepository } from '@modules/products/infra/typeorm/repositories/ProductRepository';
 import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
-import { OrderRepository } from '../typeorm/repositories/OrderRepository';
+import { OrderRepository } from '../infra/typeorm/repositories/OrderRepository';
 
 interface ISerializedProducts {
   product_id: string;
